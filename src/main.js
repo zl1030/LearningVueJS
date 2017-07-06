@@ -3,16 +3,22 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import Element from 'element-ui'
+
+// 完整引入ElementUI
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-default/index.css'
+
+import echarts from 'echarts'
 
 Vue.config.productionTip = false
+Vue.prototype.$echarts = echarts
 
-Vue.use(Element)
+Vue.use(ElementUI)
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
   template: '<App/>',
-  components: { App }
+  components: {App}
 })
