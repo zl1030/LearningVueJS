@@ -45,7 +45,7 @@
         console.log('user:' + user)
         this.username = user.name || ''
       }
-      this.drawLine()
+      this.chartRepaint()
     },
     methods: {
       logout () {
@@ -56,7 +56,7 @@
 
         })
       },
-      drawLine () {
+      chartRepaint () {
         // 基于准备好的dom，初始化echarts实例
         let myChart = this.$echarts.init(document.getElementById('myChart'))
         // 绘制图表

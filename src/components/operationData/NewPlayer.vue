@@ -3,22 +3,8 @@
     <h1>{{ msg }}</h1>
     <h2>Hello {{ username }}</h2>
     <h2>开关状态:{{value1}}</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://gitter.im/vuejs/vue" target="_blank">Gitter Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-      <br>
-      <li><a href="http://vuejs-templates.github.io/webpack/" target="_blank">Docs for This Template</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
-    <el-button type="primary" @click.native.prevent="logout">退出</el-button>
+    <el-button type="primary" @click.native.prevent="requestData1">请求1</el-button>
+    <el-button type="primary" @click.native.prevent="requestData2">请求2</el-button>
     <div id="myChart" :style="{width: '300px', height: '300px'}"></div>
     <el-switch
       v-model="value1"
@@ -29,13 +15,17 @@
 </template>
 
 <script>
+  import { requestLogin } from '../../api/api'
+
   export default {
     name: 'hello',
     data () {
       return {
         msg: '新增玩家',
         value1: true,
-        username: 'unknown'
+        username: 'unknown',
+        chartData: [],
+        myChart: null
       }
     },
     mounted () {
@@ -45,7 +35,9 @@
         console.log('user:' + user)
         this.username = user.name || ''
       }
-      this.drawLine()
+      // 获取页面上的图形DOM对象
+      this.myChart = this.$echarts.init(document.getElementById('myChart'))
+      this.chartRepaint()
     },
     methods: {
       logout () {
@@ -56,11 +48,9 @@
 
         })
       },
-      drawLine () {
-        // 基于准备好的dom，初始化echarts实例
-        let myChart = this.$echarts.init(document.getElementById('myChart'))
-        // 绘制图表
-        myChart.setOption({
+      // 绘制图表
+      chartRepaint () {
+        this.myChart.setOption({
           title: {text: '在Vue中使用echarts'},
           tooltip: {},
           xAxis: {
@@ -70,9 +60,24 @@
           series: [{
             name: '销量',
             type: 'bar',
-            data: []
-//            data: [5, 20, 36, 10, 10, 20]
+            data: this.chartData
           }]
+        })
+      },
+      requestData1 () {
+        var loginParams = {}
+
+        requestLogin(loginParams).then(data => {
+          this.chartData = [1, 2, 3, 4, 5, 6]
+          this.chartRepaint()
+        })
+      },
+      requestData2 () {
+        var loginParams = {}
+
+        requestLogin(loginParams).then(data => {
+          this.chartData = [2, 5, 2, 5, 2, 5]
+          this.chartRepaint()
         })
       }
     }
