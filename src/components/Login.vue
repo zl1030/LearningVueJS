@@ -1,7 +1,7 @@
 <template>
   <el-form ref="AccountFrom" :model="account" :rules="rules" label-position="left" label-width="0px"
            class="demo-ruleForm login-container">
-    <h3 class="title">系统登录</h3>
+    <h3 class="title">ZL-Admin</h3>
     <el-form-item prop="username">
       <el-input type="text" v-model="account.username" auto-complete="off" placeholder="账号"></el-input>
     </el-form-item>

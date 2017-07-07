@@ -9,7 +9,7 @@
       </el-col>
       <el-col :span="2">
         <div class="topbar-title topbar-btn">
-          <span>后台</span>
+          <span>ZL-Admin</span>
         </div>
       </el-col>
       <div class="topbar-account topbar-btn">
