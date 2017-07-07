@@ -33,7 +33,7 @@
     name: 'hello',
     data () {
       return {
-        msg: 'Welcome to Your Vue.js App 哈哈！',
+        msg: '新增玩家',
         value1: true,
         username: 'unknown'
       }

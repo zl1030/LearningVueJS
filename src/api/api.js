@@ -3,6 +3,7 @@ import axios from 'axios'
 // 服务器地址
 let base = ''
 
+// 登录
 export const requestLogin = params => { return axios.post(`${base}/login`, params).then(res => res.data) }
 
 export const reqSaveUserProfile = params => { return axios.post(`${base}/user/profile`, params).then(res => res.data) }

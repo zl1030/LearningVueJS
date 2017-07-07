@@ -28,6 +28,7 @@ export default {
         setTimeout(() => {
           let hasUser = Users.some(u => {
             if (u.username === username && u.password === password) {
+              // 复制出一个User后，删除password属性后，返回给前端
               user = JSON.parse(JSON.stringify(u))
               delete user.password
               return true

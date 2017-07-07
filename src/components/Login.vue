@@ -47,6 +47,7 @@
       handleLogin () {
         this.$refs.AccountFrom.validate((valid) => {
           if (valid) {
+            // 登录按钮转菊花
             this.logining = true
 
             // 按登录协议拼数据
@@ -54,6 +55,7 @@
 
             // 把帐密发给服务器验证
             requestLogin(loginParams).then(data => {
+              // 登录按钮菊花关闭
               this.logining = false
 
               let {msg, code, user} = data
@@ -81,5 +83,26 @@
   }
 </script>
 
-<style>
+<style lang="scss" scoped>
+  .login-container {
+    /*box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);*/
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    background-clip: padding-box;
+    margin: 180px auto;
+    width: 350px;
+    padding: 35px 35px 15px 35px;
+    background: #fff;
+    border: 1px solid #eaeaea;
+    box-shadow: 0 0 25px #cac6c6;
+    .title {
+      margin: 0px auto 40px auto;
+      text-align: center;
+      color: #505458;
+    }
+    .remember {
+      margin: 0px 0px 35px 0px;
+    }
+  }
 </style>

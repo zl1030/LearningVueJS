@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+    <h1>在线数据</h1>
     <h2>Hello {{ username }}</h2>
     <h2>开关状态:{{value1}}</h2>
     <ul>

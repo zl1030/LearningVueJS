@@ -10,6 +10,7 @@ Mock.init()
 // 完整引入ElementUI
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
+import '@/assets/iconfont.css'
 
 import echarts from 'echarts'
 
