@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
+    <h2>Hello {{ username }}</h2>
     <ul>
       <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
       <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
@@ -17,7 +17,7 @@
       <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
     </ul>
-    <el-button type="primary" s>abbbcc</el-button>
+    <el-button type="primary" @click.native.prevent="logout">退出</el-button>
     <div id="myChart" :style="{width: '300px', height: '300px'}"></div>
     <el-switch
       v-model="value1"
@@ -33,13 +33,29 @@
     data () {
       return {
         msg: 'Welcome to Your Vue.js App 哈哈！',
-        value1: true
+        value1: true,
+        username: 'unknown'
       }
     },
     mounted () {
+      var user = sessionStorage.getItem('access-user')
+      if (user) {
+        user = JSON.parse(user)
+        console.log('user:' + user)
+        this.username = user.username || ''
+      }
       this.drawLine()
     },
     methods: {
+      logout () {
+        var _this = this
+        this.$confirm('确认退出吗?', '提示', {
+        }).then(() => {
+          _this.$router.push('/login')
+        }).catch(() => {
+
+        })
+      },
       drawLine () {
         // 基于准备好的dom，初始化echarts实例
         let myChart = this.$echarts.init(document.getElementById('myChart'))
