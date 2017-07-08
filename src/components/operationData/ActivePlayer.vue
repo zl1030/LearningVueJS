@@ -3,6 +3,7 @@
     <h1>{{ msg }}</h1>
     <h2>Hello {{ username }}</h2>
     <h2>开关状态:{{value1}}</h2>
+    <h2>{{res}}</h2>
     <ul>
       <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
       <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
@@ -18,7 +19,7 @@
       <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
     </ul>
-    <el-button type="primary" @click.native.prevent="logout">退出</el-button>
+    <el-button type="primary" @click.native.prevent="loadRes">读取</el-button>
     <div id="myChart" :style="{width: '300px', height: '300px'}"></div>
     <el-switch
       v-model="value1"
@@ -29,13 +30,15 @@
 </template>
 
 <script>
+
   export default {
     name: 'hello',
     data () {
       return {
         msg: '活跃用户',
         value1: true,
-        username: 'unknown'
+        username: 'unknown',
+        res: null
       }
     },
     mounted () {
@@ -48,6 +51,9 @@
       this.chartRepaint()
     },
     methods: {
+      loadRes () {
+//        this.res = Utils.readLocalResource('/static/config.js')
+      },
       logout () {
         var _this = this
         this.$confirm('确认退出吗?', '提示', {}).then(() => {

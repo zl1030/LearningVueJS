@@ -55,8 +55,8 @@ export default {
     // })
     //
     // // 获取用户列表
-    // mock.onGet('/user/list').reply(config => {
-    //   let {name} = config.params
+    // mock.onGet('/user/list').reply(Config => {
+    //   let {name} = Config.params
     //   let mockUsers = _Users.filter(user => {
     //     if (name && user.name.indexOf(name) === -1) return false
     //     return true
@@ -71,8 +71,8 @@ export default {
     // })
     //
     // // 获取用户列表（分页）
-    // mock.onGet('/book/list').reply(config => {
-    //   let {page, name} = config.params
+    // mock.onGet('/book/list').reply(Config => {
+    //   let {page, name} = Config.params
     //   let mockBooks = _Books.filter(book => {
     //     if (name && book.name.indexOf(name) === -1) return false
     //     return true
@@ -90,8 +90,8 @@ export default {
     // })
     //
     // // 删除用户
-    // mock.onGet('/book/delete').reply(config => {
-    //   let {id} = config.params
+    // mock.onGet('/book/delete').reply(Config => {
+    //   let {id} = Config.params
     //   _Books = _Books.filter(b => b.id !== id)
     //   return new Promise((resolve, reject) => {
     //     setTimeout(() => {
@@ -104,8 +104,8 @@ export default {
     // })
     //
     // // 编辑图书
-    // mock.onGet('/book/edit').reply(config => {
-    //   let {id, name, author, description, publishAt} = config.params
+    // mock.onGet('/book/edit').reply(Config => {
+    //   let {id, name, author, description, publishAt} = Config.params
     //   _Books.some(u => {
     //     if (u.id === id) {
     //       u.name = name
@@ -127,8 +127,8 @@ export default {
     // })
     //
     // // 批量删除图书
-    // mock.onGet('/book/batchdelete').reply(config => {
-    //   let {ids} = config.params
+    // mock.onGet('/book/batchdelete').reply(Config => {
+    //   let {ids} = Config.params
     //   ids = ids.split(',')
     //   _Books = _Books.filter(u => !ids.includes(u.id))
     //   return new Promise((resolve, reject) => {
@@ -142,8 +142,8 @@ export default {
     // })
     //
     // // 新增图书
-    // mock.onGet('/book/add').reply(config => {
-    //   let {name, author, description, publishAt} = config.params
+    // mock.onGet('/book/add').reply(Config => {
+    //   let {name, author, description, publishAt} = Config.params
     //   _Books.push({
     //     name: name,
     //     author: author,

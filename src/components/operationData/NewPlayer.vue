@@ -13,10 +13,10 @@
         <span>渠道</span>
         <el-select v-model="channelId" placeholder="请选择">
           <el-option
-            v-for="item in channels"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+            v-for="channel in channels"
+            :key="channel.id"
+            :label="channel.name"
+            :value="channel.id"
           >
           </el-option>
         </el-select>
@@ -25,10 +25,10 @@
         <span>游戏区</span>
         <el-select v-model="serverId" placeholder="请选择">
           <el-option
-            v-for="item in servers"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            v-for="server in servers"
+            :key="server.id"
+            :label="server.name"
+            :value="server.id">
           </el-option>
         </el-select>
       </el-col>
@@ -71,10 +71,10 @@
 
 <script>
   import { requestLogin } from '@/api/api'
-  import { Servers, Channels } from '@/consts'
+  import Config from '@/../static/Config'
   import ElCol from 'element-ui/packages/col/src/col'
   import ElRow from 'element-ui/packages/row/src/row'
-  import { formatDate } from '@/utils'
+  import Utils from '@/Utils'
 
   export default {
     components: {
@@ -85,12 +85,12 @@
     data () {
       return {
         msg: '新增玩家',
-        beginDate: this.getNowFormatDate(),
-        endDate: this.getNowFormatDate(),
+        beginDate: Utils.getNowFormatDate(),
+        endDate: Utils.getNowFormatDate(),
         chartData: [],
         myChart: null,
-        servers: Servers,
-        channels: Channels,
+        servers: Config.Servers,
+        channels: Config.Channels,
         channelId: -1,
         serverId: -1
       }
@@ -103,7 +103,7 @@
     filters: {
       formatDate (time) {
         var date = new Date(time)
-        return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
+        return Utils.formatDate(date, 'yyyy-MM-dd hh:mm:ss')
       }
     },
     methods: {
@@ -138,23 +138,6 @@
           this.chartData = [2, 5, 2, 5, 2, 5]
           this.chartRepaint()
         })
-      },
-      getNowFormatDate () {
-        var date = new Date()
-        var seperator1 = '-'
-        var seperator2 = ':'
-        var month = date.getMonth() + 1
-        var strDate = date.getDate()
-        if (month >= 1 && month <= 9) {
-          month = '0' + month
-        }
-        if (strDate >= 0 && strDate <= 9) {
-          strDate = '0' + strDate
-        }
-        var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate +
-          ' ' + date.getHours() + seperator2 + date.getMinutes() +
-          seperator2 + date.getSeconds()
-        return currentdate
       }
     }
   }
