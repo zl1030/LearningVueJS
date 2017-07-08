@@ -55,10 +55,10 @@
     </el-row>
     <el-row>
       <el-col :span="12">
-        <el-button type="primary" @click.native.prevent="requestData1">请求1</el-button>
+        <el-button type="primary" @click.native.prevent="requestData1" :loading="request1Loading">请求1</el-button>
       </el-col>
       <el-col :span="12">
-        <el-button type="primary" @click.native.prevent="requestData2">请求2</el-button>
+        <el-button type="primary" @click.native.prevent="requestData2" :loading="request2Loading">请求2</el-button>
       </el-col>
     </el-row>
     <el-row>
@@ -92,7 +92,9 @@
         servers: Config.Servers,
         channels: Config.Channels,
         channelId: -1,
-        serverId: -1
+        serverId: -1,
+        request1Loading: false,
+        request2Loading: false
       }
     },
     mounted () {
@@ -124,12 +126,16 @@
         })
       },
       requestData1 () {
+        this.request1Loading = true
+
         var loginParams = {}
 
         requestLogin(loginParams).then(data => {
           this.chartData = [1, 2, 3, 4, 5, 6]
           this.chartRepaint()
         })
+
+        this.request1Loading = false
       },
       requestData2 () {
         var loginParams = {}
