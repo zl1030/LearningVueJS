@@ -21,6 +21,21 @@ exports.Servers = [{
 }, {
   id: 5,
   name: '区5'
+}, {
+  id: 6,
+  name: '区6'
+}, {
+  id: 7,
+  name: '区7'
+}, {
+  id: 8,
+  name: '区8'
+}, {
+  id: 9,
+  name: '区9'
+}, {
+  id: 10,
+  name: '区10'
 }]
 
 // 渠道列表

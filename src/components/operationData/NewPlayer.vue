@@ -55,7 +55,7 @@
     </el-row>
     <el-row>
       <el-col :span="12">
-        <el-button type="primary" @click.native.prevent="requestData1" :loading="request1Loading">请求1</el-button>
+        <el-button type="primary" @click.native.prevent="requestData1" :loading="queryBtnLoading">请求1</el-button>
       </el-col>
       <el-col :span="12">
         <el-button type="primary" @click.native.prevent="requestData2" :loading="request2Loading">请求2</el-button>
@@ -64,6 +64,9 @@
     <el-row>
       <el-col :span="12">
         <div id="myChart" :style="{width: '100%', height: '300px'}"></div>
+      </el-col>
+      <el-col :span="12">
+        <div id="myChart2" :style="{width: '100%', height: '300px'}"></div>
       </el-col>
     </el-row>
   </section>
@@ -87,20 +90,23 @@
         msg: '新增玩家',
         beginDate: Utils.getNowFormatDate(),
         endDate: Utils.getNowFormatDate(),
-        chartData: [],
+        onlineChartData: [],
         myChart: null,
+        myChart2: null,
         servers: Config.Servers,
         channels: Config.Channels,
         channelId: -1,
         serverId: -1,
-        request1Loading: false,
+        queryBtnLoading: false,
         request2Loading: false
       }
     },
     mounted () {
       // 获取页面上的图形DOM对象
       this.myChart = this.$echarts.init(document.getElementById('myChart'))
-      this.chartRepaint()
+      this.myChart2 = this.$echarts.init(document.getElementById('myChart2'))
+      this.chart1Repaint()
+      this.onlineChartRepaint()
     },
     filters: {
       formatDate (time) {
@@ -110,39 +116,97 @@
     },
     methods: {
       // 绘制图表
-      chartRepaint () {
+      chart1Repaint () {
         this.myChart.setOption({
           title: {text: '图表测试1'},
           tooltip: {},
+          legend: {
+            data: ['销量', '流水']
+          },
           xAxis: {
             data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
           },
-          yAxis: {},
-          series: [{
-            name: '销量',
-            type: 'bar',
-            data: this.chartData
-          }]
+          yAxis: {
+            type: 'value'
+          },
+          series: [
+            {
+              name: '销量',
+              type: 'bar',
+              data: this.onlineChartData
+            },
+            {
+              name: '流水',
+              type: 'bar',
+              data: this.onlineChartData
+            }]
+        })
+      },
+      onlineChartRepaint () {
+        this.myChart2.setOption({
+          title: {
+            text: 'Line Chart'
+          },
+          tooltip: {
+            trigger: 'axis'
+          },
+          legend: {
+            data: ['邮件营销', '联盟广告', '搜索引擎']
+          },
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+          },
+          xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+          },
+          yAxis: {
+            type: 'value'
+          },
+          series: [
+            {
+              name: '邮件营销',
+              type: 'line',
+              stack: '总量',
+              data: [120, 132, 101, 134, 90, 230, 210]
+            },
+            {
+              name: '联盟广告',
+              type: 'line',
+              stack: '总量',
+              data: [220, 182, 191, 234, 290, 330, 310]
+            },
+            {
+              name: '搜索引擎',
+              type: 'line',
+              stack: '总量',
+              data: [820, 932, 901, 934, 1290, 1330, 1320]
+            }
+          ]
         })
       },
       requestData1 () {
-        this.request1Loading = true
+        this.queryBtnLoading = true
 
         var loginParams = {}
 
         requestLogin(loginParams).then(data => {
-          this.chartData = [1, 2, 3, 4, 5, 6]
-          this.chartRepaint()
+          this.onlineChartData = [1, 2, 3, 4, 5, 6]
+          this.chart1Repaint()
         })
 
-        this.request1Loading = false
+        this.queryBtnLoading = false
       },
       requestData2 () {
         var loginParams = {}
 
         requestLogin(loginParams).then(data => {
-          this.chartData = [2, 5, 2, 5, 2, 5]
-          this.chartRepaint()
+          this.onlineChartData = [2, 5, 2, 5, 2, 5]
+          this.chart1Repaint()
         })
       }
     }

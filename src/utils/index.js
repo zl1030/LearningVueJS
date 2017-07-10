@@ -46,3 +46,94 @@ exports.getNowFormatDate = function () {
   return currentdate
 }
 
+// 初始化一个图表
+exports.initDefaultChart = function (tmpChart, name) {
+  tmpChart.chartType = this.CHART_TYPE.LINE
+  tmpChart.setOption({
+    title: {
+      text: name
+    },
+    tooltip: {
+      trigger: 'axis'
+    },
+    legend: {
+      data: []
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: [],
+      axisLabel: {
+        interval: 0
+      }
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series: []
+  })
+  return tmpChart
+}
+
+// 根据图表数据刷新图表
+exports.refreshChart = function (chart, chartData) {
+  var option = chart.getOption()
+  chart.clear()
+
+  var {legend, xAxisData, series} = chartData
+
+  option.legend = legend
+  option.xAxis = xAxisData
+  option.series = series
+
+  chart.setOption(option)
+}
+
+// 图表类型
+exports.CHART_TYPE = {
+  // 线图
+  LINE: 'line',
+  BAR: 'bar',
+  // 柱状图
+  COLUMN: 'bar'
+}
+
+// 创建一个空的图表数据模板
+exports.createEmptyChartData = function (chartType) {
+  // X轴是否离原点有一定距离
+  var bondaryGap = true
+  if (chartType === this.CHART_TYPE.LINE) {
+    bondaryGap = false
+  }
+
+  return {
+    legend: {
+      data: []
+    },
+    xAxisData: {
+      type: 'category',
+      boundaryGap: bondaryGap,
+      data: []
+    },
+    series: [],
+    pushLegend: function (name) {
+      this.legend.data.push(name)
+    },
+    pushXAxis: function (name) {
+      this.xAxisData.data.push(name)
+    },
+    pushData: function (name, data) {
+      this.series.push({
+        name: name,
+        type: chartType, // 该参数实际影响图表绘制类型
+        data: data
+      })
+    }
+  }
+}
