@@ -115,23 +115,39 @@
         }
 
         requestOnline(params).then(data => {
-          this.$message({
-            message: data
-          })
+          let {code, tableData} = data
 
-          var chartData = Utils.createEmptyChartData(Utils.CHART_TYPE.LINE)
-          chartData.pushLegend('邮件营销')
-          chartData.pushLegend('联盟广告')
-          chartData.pushLegend('搜索引擎')
-          var dateOfWeek = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-          for (var i = 0; i < dateOfWeek.length; i++) {
-            chartData.pushXAxis(dateOfWeek[i])
+          if (code === 200) {
+            var chartData = Utils.createEmptyChartData(Utils.CHART_TYPE.LINE)
+            chartData.pushLegend('在线人数')
+
+            var t = []
+            for (var i = 0, j = tableData.length; i < j; i++) {
+              chartData.pushXAxis(tableData[i].logTime)
+              t.push(tableData[i].online)
+            }
+            chartData.pushData('在线人数', t)
+
+            Utils.refreshChart(this.onlineChart, chartData)
+          } else {
+            this.$message({
+              message: 'requestOnline:' + code
+            })
           }
-          chartData.pushData('邮件营销', [120, 132, 101, 134, 90, 230, 210])
-          chartData.pushData('联盟广告', [220, 182, 191, 234, 290, 330, 310])
-          chartData.pushData('搜索引擎', [820, 932, 901, 934, 1290, 1330, 1320])
 
-          Utils.refreshChart(this.onlineChart, chartData)
+//          var chartData = Utils.createEmptyChartData(Utils.CHART_TYPE.LINE)
+//          chartData.pushLegend('在线人数')
+//          chartData.pushLegend('联盟广告')
+//          chartData.pushLegend('搜索引擎')
+//          var dateOfWeek = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+//          for (var i = 0; i < dateOfWeek.length; i++) {
+//            chartData.pushXAxis(dateOfWeek[i])
+//          }
+//          chartData.pushData('邮件营销', [120, 132, 101, 134, 90, 230, 210])
+//          chartData.pushData('联盟广告', [220, 182, 191, 234, 290, 330, 310])
+//          chartData.pushData('搜索引擎', [820, 932, 901, 934, 1290, 1330, 1320])
+//
+//          Utils.refreshChart(this.onlineChart, chartData)
         })
 
         this.queryBtnLoading = false

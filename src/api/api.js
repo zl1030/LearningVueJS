@@ -12,7 +12,7 @@ export const requestOnline = params => {
   // var {beginDate, endDate, gameId, serverId, channelId} = params
   // return axios.post(`${serviceBase}/webtools-sas/query/v1/online/${beginDate},${endDate}/${gameId}/${serverId}/${channelId}/`).then(res => res.data)
 
-  return axios.get(`${base}/online`).then(res => res.data)
+  return axios.get(`${base}/online`, {params: {}}).then(res => res.data)
 }
 
 export const reqSaveUserProfile = params => { return axios.post(`${base}/user/profile`, params).then(res => res.data) }
