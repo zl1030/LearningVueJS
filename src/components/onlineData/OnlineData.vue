@@ -107,6 +107,23 @@
         return Utils.formatDate(date, 'yyyy-MM-dd hh:mm:ss')
       },
       reqOnlineData () {
+        // 提交前参数合法性验证
+        if (this.beginDate.trim().length === 0 || this.endDate.trim().length === 0) {
+          this.$notify({
+            title: '警告',
+            message: '起始或结束时间不能为空',
+            type: 'warning'
+          })
+          return
+        } else if (this.beginDate === this.endDate) {
+          this.$notify({
+            title: '警告',
+            message: '起始结束时间不能一样',
+            type: 'warning'
+          })
+          return
+        }
+
         // 开启Loading效果
         this.queryBtnLoading = true
 
