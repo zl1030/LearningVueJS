@@ -4,57 +4,45 @@
 
 // 游戏区列表
 exports.Servers = [{
-  id: -1,
+  id: 0,
   name: '所有'
 }, {
-  id: 1,
-  name: '区1'
-}, {
-  id: 2,
-  name: '区2'
-}, {
-  id: 3,
-  name: '区3'
-}, {
-  id: 4,
-  name: '区4'
-}, {
-  id: 5,
-  name: '区5'
-}, {
   id: 6,
-  name: '区6'
+  name: '124测试区'
 }, {
-  id: 7,
-  name: '区7'
+  id: 20,
+  name: '20区'
 }, {
-  id: 8,
-  name: '区8'
+  id: 21,
+  name: '21区'
 }, {
-  id: 9,
-  name: '区9'
+  id: 22,
+  name: '22区'
 }, {
-  id: 10,
-  name: '区10'
+  id: 23,
+  name: '23区'
+}, {
+  id: 24,
+  name: '24区'
 }]
 
 // 渠道列表
 exports.Channels = [{
-  id: -1,
+  id: 0,
   name: '全部'
 }, {
   id: 1,
-  name: '黄金糕'
+  name: '渠道1'
 }, {
   id: 2,
-  name: '双皮奶'
+  name: '渠道2'
 }, {
   id: 3,
-  name: '蚵仔煎'
+  name: '渠道3'
 }, {
   id: 4,
-  name: '龙须面'
+  name: '渠道4'
 }, {
   id: 5,
-  name: '北京烤鸭'
+  name: '渠道5'
 }]

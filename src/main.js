@@ -4,8 +4,8 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
-import Mock from './mock'
-Mock.init()
+// import Mock from './mock'
+// Mock.init()
 
 // 完整引入ElementUI
 import ElementUI from 'element-ui'

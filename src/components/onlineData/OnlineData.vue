@@ -85,8 +85,8 @@
         onlineChart: null,
         servers: Config.Servers,
         channels: Config.Channels,
-        channelId: -1,
-        serverId: -1,
+        channelId: 1,
+        serverId: 1,
         queryBtnLoading: false
       }
     },
@@ -102,38 +102,38 @@
       }
     },
     methods: {
+      formatDate (time) {
+        var date = new Date(time)
+        return Utils.formatDate(date, 'yyyy-MM-dd hh:mm:ss')
+      },
       reqOnlineData () {
         this.queryBtnLoading = true
 
         // 查询请求参数
         var params = {
-          beginDate: this.beginDate,
-          endDate: this.endDate,
+          beginDate: this.formatDate(this.beginDate),
+          endDate: this.formatDate(this.endDate),
           gameId: 1000,
           serverId: this.serverId,
           channelId: this.channelId
         }
 
         requestOnline(params).then(data => {
-          let {code, tableData} = data
+          var chartData = Utils.createEmptyChartData(Utils.CHART_TYPE.LINE)
+          chartData.pushLegend('在线人数')
 
-          if (code === 200) {
-            var chartData = Utils.createEmptyChartData(Utils.CHART_TYPE.LINE)
-            chartData.pushLegend('在线人数')
-
-            var t = []
-            for (var i = 0, j = tableData.length; i < j; i++) {
-              chartData.pushXAxis(tableData[i].logTime)
-              t.push(tableData[i].online)
-            }
-            chartData.pushData('在线人数', t)
-
-            Utils.refreshChart(this.onlineChart, chartData)
-          } else {
-            this.$message({
-              message: 'requestOnline:' + code
-            })
+          var t = []
+          for (var i = 0, j = data.length; i < j; i++) {
+            chartData.pushXAxis(data[i].logTime)
+            t.push(data[i].online)
           }
+          chartData.pushData('在线人数', t)
+
+          Utils.refreshChart(this.onlineChart, chartData)
+
+//            this.$message({
+//              message: 'requestOnline:' + code
+//            })
 
 //          var chartData = Utils.createEmptyChartData(Utils.CHART_TYPE.LINE)
 //          chartData.pushLegend('在线人数')
@@ -149,6 +149,13 @@
 //
 //          Utils.refreshChart(this.onlineChart, chartData)
         })
+//          .catch(function (error) {
+//          if (error.response) {
+//            this.$message({
+//              message: error.response.status
+//            })
+//          }
+//        })
 
         this.queryBtnLoading = false
       }
