@@ -57,7 +57,7 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="24">
+      <el-col v-loading="queryBtnLoading" :span="24">
         <div id="onlineChart" :style="{width: '100%', height: '300px'}"></div>
       </el-col>
     </el-row>
@@ -85,8 +85,8 @@
         onlineChart: null,
         servers: Config.Servers,
         channels: Config.Channels,
-        channelId: 1,
-        serverId: 1,
+        channelId: Config.Channels[1].id, // 渠道选择框初始值
+        serverId: Config.Servers[1].id, // 渠道选择框初始值
         queryBtnLoading: false
       }
     },
@@ -107,33 +107,42 @@
         return Utils.formatDate(date, 'yyyy-MM-dd hh:mm:ss')
       },
       reqOnlineData () {
+        // 开启Loading效果
         this.queryBtnLoading = true
 
         // 查询请求参数
         var params = {
           beginDate: this.formatDate(this.beginDate),
           endDate: this.formatDate(this.endDate),
-          gameId: 1000,
+          gameId: Config.GameId,
           serverId: this.serverId,
           channelId: this.channelId
         }
 
         requestOnline(params).then(data => {
-          var chartData = Utils.createEmptyChartData(Utils.CHART_TYPE.LINE)
-          chartData.pushLegend('在线人数')
+          if (data.status !== 200) {
+            this.$notify.error({
+              message: '查询出错,错误码:' + data.status,
+              title: '错误'
+            })
+            // 关闭Loading效果
+            this.queryBtnLoading = false
+          } else {
+            var chartData = Utils.createEmptyChartData(Utils.CHART_TYPE.LINE)
+            chartData.pushLegend('在线人数')
 
-          var t = []
-          for (var i = 0, j = data.length; i < j; i++) {
-            chartData.pushXAxis(data[i].logTime)
-            t.push(data[i].online)
+            var step = 5 // 数据返回为1分钟1条，显示时改为5分钟1条
+            var t = []
+            for (var i = 0, j = data.data.length; i < j; i += step) {
+              chartData.pushXAxis(data.data[i].logTime)
+              t.push(data.data[i].online)
+            }
+            chartData.pushData('在线人数', t)
+
+            Utils.refreshChart(this.onlineChart, chartData)
+            // 关闭Loading效果
+            this.queryBtnLoading = false
           }
-          chartData.pushData('在线人数', t)
-
-          Utils.refreshChart(this.onlineChart, chartData)
-
-//            this.$message({
-//              message: 'requestOnline:' + code
-//            })
 
 //          var chartData = Utils.createEmptyChartData(Utils.CHART_TYPE.LINE)
 //          chartData.pushLegend('在线人数')
@@ -148,16 +157,18 @@
 //          chartData.pushData('搜索引擎', [820, 932, 901, 934, 1290, 1330, 1320])
 //
 //          Utils.refreshChart(this.onlineChart, chartData)
+        }).catch(function (error) {
+          this.$message({
+            message: 'hahahahahaha',
+            type: 'error'
+          })
+          if (error.response) {
+            this.$message({
+              message: error.response.status,
+              type: 'error'
+            })
+          }
         })
-//          .catch(function (error) {
-//          if (error.response) {
-//            this.$message({
-//              message: error.response.status
-//            })
-//          }
-//        })
-
-        this.queryBtnLoading = false
       }
     }
   }

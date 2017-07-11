@@ -2,6 +2,9 @@
  * Created by zl1030 on 2017/7/7.
  */
 
+// 游戏ID
+exports.GameId = 1000
+
 // 游戏区列表
 exports.Servers = [{
   id: 0,
