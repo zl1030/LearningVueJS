@@ -12,8 +12,9 @@ export const requestLogin = params => { return axios.post(`${base}/login`, param
 
 // 接口：查在线人数
 export const requestOnline = params => {
-  // 按数据接口协议拼请求地址
   var {beginDate, endDate, gameId, serverId, channelId} = params
+
+  // 按数据接口协议拼请求地址
   var url = `${serviceBase}online/${beginDate},${endDate}/${gameId}/${channelId}/${serverId}/`
   console.log('url:' + url)
   return axios.get(url).then(function (res) {

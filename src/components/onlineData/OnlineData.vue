@@ -2,10 +2,10 @@
   <section class="chart-container">
     <el-row>
       <el-col :span="24">
-        <h1>{{ msg }}</h1>
-        <h2>{{beginDate | formatDate}}-{{endDate | formatDate}}</h2>
-        <h2>{{channelId}}</h2>
-        <h2>{{serverId}}</h2>
+        <!--<h1>{{ msg }}</h1>-->
+        <!--<h2>{{beginDate | formatDate}}-{{endDate | formatDate}}</h2>-->
+        <!--<h2>渠道ID:{{channelId}}</h2>-->
+        <!--<h2>游戏区ID:{{serverId}}</h2>-->
       </el-col>
     </el-row>
     <el-row>
@@ -119,6 +119,7 @@
           channelId: this.channelId
         }
 
+        // 向数据接口发查询请求
         requestOnline(params).then(data => {
           if (data.status !== 200) {
             this.$notify.error({
@@ -157,17 +158,6 @@
 //          chartData.pushData('搜索引擎', [820, 932, 901, 934, 1290, 1330, 1320])
 //
 //          Utils.refreshChart(this.onlineChart, chartData)
-        }).catch(function (error) {
-          this.$message({
-            message: 'hahahahahaha',
-            type: 'error'
-          })
-          if (error.response) {
-            this.$message({
-              message: error.response.status,
-              type: 'error'
-            })
-          }
         })
       }
     }

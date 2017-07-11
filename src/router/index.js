@@ -11,6 +11,8 @@ import OnlineData from '@/components/onlineData/OnlineData'
 import NewPlayer from '@/components/operationData/NewPlayer'
 import ActivePlayer from '@/components/operationData/ActivePlayer'
 
+import Config from '@/../static/Config'
+
 Vue.use(Router)
 
 let router = new Router({
@@ -93,9 +95,13 @@ router.beforeEach((to, from, next) => {
     window.sessionStorage.removeItem('access-user')
     next()
   } else {
-    let user = JSON.parse(window.sessionStorage.getItem('access-user'))
-    if (!user) {
-      next({path: '/login'})
+    if (Config.Auth) {
+      let user = JSON.parse(window.sessionStorage.getItem('access-user'))
+      if (!user) {
+        next({path: '/login'})
+      } else {
+        next()
+      }
     } else {
       next()
     }

@@ -5,6 +5,9 @@
 // 游戏ID
 exports.GameId = 1000
 
+// 是否需要登录验证
+exports.Auth = false
+
 // 游戏区列表
 exports.Servers = [{
   id: 0,
